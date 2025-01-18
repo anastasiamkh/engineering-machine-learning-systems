@@ -10,16 +10,15 @@ This repository does not discuss selecting optimal ML algorithms for a specific 
 ## Table of Contents
 ## 1. System Design
 Understanding system design principles is essential for building scalable and reliable software systems, including ML applications where additional considerations like caching predictions or scaling model inference apply.
-- **Introduction to System Requirements**: What is availability, fault tolerance, scalability. ML-specific requirements.
-- **Networking**: Basics of DNS, HTTP/HTTPS, and load balancing; considerations for model serving over APIs.
-- **APIs**: REST vs. gRPC for ML model serving; handling high-concurrency inference requests.
-- **Proxies and Load Balancing**: Ensuring high availability and low latency for inference services.
-- **Caching**: Key-value stores for caching predictions, embeddings, or frequently used features.
-- **Microservices**: Best practices for decoupling ML services; microservices vs. monolith in ML systems.
-- **Databases/Storage**: SQL, NoSQL, and data lakes; storing features, metadata, and model outputs.
-- **Event-Driven Architectures**: Using message queues (Kafka, RabbitMQ) for real-time feature pipelines and asynchronous inference.
-- **Distributed Systems**: CAP theorem, consistency models, and their relevance in ML pipelines.
-- **Meeting System Requirements**: Designing for availability, fault tolerance, etc.
+- [**System Requirements & Trade-Offs**](#11-system-requirements): What is availability, fault tolerance, scalability. ML-specific requirements.
+- [**Networking**](#12-networking): Basics of DNS, HTTP/HTTPS, and load balancing; considerations for model serving over APIs.
+- [**APIs**](#13-apis): REST vs. gRPC for ML model serving; handling high-concurrency inference requests.
+- [**Proxies and Load Balancing**](#14-proxies--load-balancing): Ensuring high availability and low latency for inference services.
+- [**Caching**](#15-caching): Key-value stores for caching predictions, embeddings, or frequently used features.
+- [**Storage**](#16-storage): SQL, NoSQL, and data lakes; storing features, metadata, and model outputs.
+- [**Microservices**](#17-microservices): Best practices for decoupling ML services; microservices vs. monolith in ML systems.
+- [**Event-Driven Architectures**](#18-event-driven-architectures): Using message queues (Kafka, RabbitMQ) for real-time feature pipelines and asynchronous inference.
+- [**Distributed Systems**](#19-distributed-systems): CAP theorem, consistency models, and their relevance in ML pipelines.
 - **Best Practices**
 - **Challenges and Trade-Offs**
 
@@ -117,7 +116,6 @@ In the context of ML, system design involves making key decisions that shape the
 While we will explore *ML-specific system design questions* in later chapters, it is crucial to first understand the **foundations of system design**. Topics such as **networking**, **caching**, **load balancing**, and **messaging** form the backbone of all software systems, including those for ML applications.
 
 ## 1.1 System Requirements
-## System Requirements
 
 Before designing a system, it’s critical to understand the **non-functional requirements** it needs to fulfill. These requirements define the goals of the system and influence the trade-offs made during design. The most common requirements include:
 
@@ -150,8 +148,29 @@ Performance measures how efficiently a system executes its tasks, often evaluate
 
 For ML systems, performance extends to:
 - **Inference latency**: The time taken to generate predictions.
-- **Training efficiency**: The speed of model training over large datasets.
+- **Training efficiency**: The speed/duration of model training, it's throughput
 - **Model performance**: Metrics like accuracy, RMSE, or F1-score, which are unique to ML applications.
+
+##### Designing for Latency
+- **Load Balancing**: Distribute incoming traffic across multiple servers to minimize request processing time.  
+- **Caching**: Use in-memory caches (e.g., Redis, Memcached) to store frequently accessed data or pre-computed results.  
+- **Efficient Algorithms**: Optimize algorithms for lower computational complexity to reduce processing time.  
+- **Edge Computing**: Process requests closer to the user to reduce network delays.  
+- **Database Optimization**: Use indexing, query optimization, and partitioning to speed up database queries.  
+- **Asynchronous Processing**: Defer non-critical tasks to background jobs to improve user-facing latency.  
+
+##### Designing for Throughput
+- **Horizontal Scaling**: Add more instances or servers to handle increased workloads.  
+- **Batch Processing**: Aggregate multiple requests or data points into a single operation to reduce system overhead.  
+- **Concurrency**: Optimize applications to process multiple requests in parallel using multi-threading, async programming, or worker pools.  
+- **Sharding**: Divide data into smaller, manageable chunks distributed across multiple nodes.  
+- **Efficient Protocols**: Use lightweight communication protocols (e.g., gRPC) for high-throughput systems.  
+
+##### Designing for Model Performance
+- **Model Quantization**: Reduce the size and precision of models (e.g., FP32 to INT8) to speed up inference without significant accuracy loss.  
+- **Pruning and Distillation**: Simplify models by removing redundant parameters or using smaller distilled versions of large models.  
+- **Feature Selection**: Remove unnecessary features to improve training and inference efficiency.  
+- **Specialized Hardware**: Use GPUs, TPUs, or inference accelerators for faster model training and serving.  
 
 ---
 
@@ -162,6 +181,14 @@ ML systems must maintain availability to:
 - Serve predictions reliably in real-time applications.
 - Prevent downtime in critical pipelines, such as fraud detection or recommendation engines.
 
+#### Designing for Availability
+- **Replication Across Regions**: Replicate services and data in multiple regions to avoid single points of failure.  
+- **Load Balancing**: Redirect traffic to healthy nodes during failures.  
+- **Zero-Downtime Deployments**: Use strategies like blue-green or canary deployments.  
+- **Backup and Restore**: Regularly back up data and test recovery procedures.  
+- **Distributed Systems**: Distribute the workload to reduce reliance on any single component.  
+- **Quorum Mechanisms**: Use consensus protocols (e.g., Paxos, Raft) to ensure availability in distributed systems.  
+
 ---
 
 ### **Cost**
@@ -169,6 +196,14 @@ Cost constraints include infrastructure, operational, and development expenses. 
 - The storage and processing of large datasets.
 - Computational resources for model training and inference.
 - Optimization of resource usage to balance performance and budget.
+
+#### Designing for Cost Efficiency
+- **Choose Optimal Resource Types**: Use reserved or spot instances for predictable workloads.  
+- **Right-Sizing Resources**: Allocate resources based on actual workload requirements.  
+- **Serverless Architectures**: Use pay-as-you-go models for infrequent workloads (e.g., AWS Lambda).  
+- **Data Lifecycle Management**: Archive or delete outdated data to reduce storage costs.  
+- **Auto-scaling**: Scale down resources during low-demand periods.  
+- **Batch Processing**: Aggregate and process data in batches to reduce compute costs.  
 
 ---
 
@@ -183,29 +218,48 @@ An ML engineer must evaluate these trade-offs while considering the unique chall
 ## 1.2 Networking
 
 
+### Best Practices (Patterns)
+### Chanllenges and Trade-Offs
+
 ## 1.3 APIs
 
+### Best Practices (Patterns)
+### Chanllenges and Trade-Offs
 
 ## 1.4 Proxies & Load Balancing
 
+### Best Practices (Patterns)
+### Chanllenges and Trade-Offs
 
 ## 1.5 Caching
 
+### Best Practices (Patterns)
+### Chanllenges and Trade-Offs
 
 ## 1.6 Storage
 
+### Best Practices (Patterns)
+### Chanllenges and Trade-Offs
 
 ## 1.7 Microservices
 
+### Best Practices (Patterns)
+### Chanllenges and Trade-Offs
 
 ## 1.8 Event-Driven Architectures
 
+### Best Practices (Patterns)
+### Chanllenges and Trade-Offs
 
 ## 1.9 Distributed Systems
 
+### Best Practices (Patterns)
+### Chanllenges and Trade-Offs
 
-## 1.10 Best Parctices (Patterns)
+## 1.10 Best Practices (Patterns)
 
+### Best Practices (Patterns)
+### Chanllenges and Trade-Offs
 
 ## 1.11 Chanllenges and Trade-Offs
 
