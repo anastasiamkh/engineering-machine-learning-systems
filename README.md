@@ -115,3 +115,97 @@ In the context of ML, system design involves making key decisions that shape the
 - What infrastructure is required to support **distributed training**?  
 
 While we will explore *ML-specific system design questions* in later chapters, it is crucial to first understand the **foundations of system design**. Topics such as **networking**, **caching**, **load balancing**, and **messaging** form the backbone of all software systems, including those for ML applications.
+
+## 1.1 System Requirements
+## System Requirements
+
+Before designing a system, it’s critical to understand the **non-functional requirements** it needs to fulfill. These requirements define the goals of the system and influence the trade-offs made during design. The most common requirements include:
+
+### **Scalability**
+Scalability is the ability of a system to handle an increasing amount of work or accommodate growth in users, data, or requests. Systems can scale:
+- **Vertically**: By upgrading hardware (e.g., adding more memory or CPU power to a single server).  
+- **Horizontally**: By adding more machines to distribute the workload.
+
+> **ML Systems** For ML systems, scalability often involves:
+> - Handling growing datasets for training and inference.
+> - Scaling model inference to serve requests in real-time.
+> - Supporting distributed training for larger models.
+
+---
+
+### **Fault Tolerance**
+Fault tolerance is the ability of a system to continue operating even when some of its components fail. This is achieved through redundancy and failover mechanisms.
+
+> **ML Systems** fault tolerance is crucial to:
+> - Ensure model serving remains available during infrastructure failures.
+> - Handle partial failures in distributed training without halting the entire process.
+> - Maintain data integrity in feature pipelines and storage.
+
+---
+
+### **Performance**
+Performance measures how efficiently a system executes its tasks, often evaluated through:
+- **Latency**: The time it takes to process a single request.
+- **Throughput**: The number of requests a system can handle in a given time.
+
+For ML systems, performance extends to:
+- **Inference latency**: The time taken to generate predictions.
+- **Training efficiency**: The speed of model training over large datasets.
+- **Model performance**: Metrics like accuracy, RMSE, or F1-score, which are unique to ML applications.
+
+---
+
+### **Availability**
+Availability is the degree to which a system is operational and accessible when needed. High availability systems aim for minimal downtime, even during failures or maintenance.
+
+ML systems must maintain availability to:
+- Serve predictions reliably in real-time applications.
+- Prevent downtime in critical pipelines, such as fraud detection or recommendation engines.
+
+---
+
+### **Cost**
+Cost constraints include infrastructure, operational, and development expenses. In ML systems, cost considerations include:
+- The storage and processing of large datasets.
+- Computational resources for model training and inference.
+- Optimization of resource usage to balance performance and budget.
+
+---
+
+### **Balancing Trade-offs**
+System requirements often compete with one another, requiring careful trade-offs. For example:
+- Increasing fault tolerance might add latency due to additional redundancy.
+- Reducing latency might require higher costs to provision more powerful hardware.
+
+An ML engineer must evaluate these trade-offs while considering the unique challenges of ML systems, ensuring that the design meets both **business goals** and **technical constraints**.
+
+
+## 1.2 Networking
+
+
+## 1.3 APIs
+
+
+## 1.4 Proxies & Load Balancing
+
+
+## 1.5 Caching
+
+
+## 1.6 Storage
+
+
+## 1.7 Microservices
+
+
+## 1.8 Event-Driven Architectures
+
+
+## 1.9 Distributed Systems
+
+
+## 1.10 Best Parctices (Patterns)
+
+
+## 1.11 Chanllenges and Trade-Offs
+
