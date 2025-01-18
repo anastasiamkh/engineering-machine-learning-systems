@@ -7,7 +7,7 @@ Beyond these, ML engineers must also recognize what makes ML systems unique comp
 
 This repository does not discuss selecting optimal ML algorithms for a specific business problem. Instead, the focus is on **transforming existing data and ML research solutions designed by data scientists into scalable, well-engineered production services**.
 
-
+## Table of Contents
 ## 1. System Design
 Understanding system design principles is essential for building scalable and reliable software systems, including ML applications where additional considerations like caching predictions or scaling model inference apply.
 - **Introduction to System Requirements**: What is availability, fault tolerance, scalability. ML-specific requirements.
@@ -94,3 +94,24 @@ Focuses on applying DevOps principles to ML systems, including automation, testi
 - **Orchestration**: Using tools like Kubeflow, MetaFlow etc to automate the entite ML Workflow
 - **Best Practices**
 - **Challenges and Trade-Offs**
+
+
+# 1 System Design
+
+### What is actually System Design? How do ML system differnt from other Software Systems?
+
+System design is the process of defining the **architecture** and **components** of a software system to meet specific requirements. Common requirements include **scalability**, **fault-tolerance**, **performance**, and **availability**. In traditional software, performance often focuses on *latency*, whereas ML engineers must also consider *model performance* (e.g., accuracy, RMSE) alongside latency.
+
+Designing any software application requires balancing these requirements while accounting for real-world constraints such as **cost**, **hardware limitations**, and **user experience**. A well-designed system ensures that all components work cohesively and efficiently under varying conditions.
+
+**ML engineers** face additional complexities unique to **machine learning systems**, which involve managing both code and model artifacts. Some of the added challenges include:
+- Processing **large volumes of data** while balancing inference latency, accuracy, and cost.  
+- Ensuring **consistency between training and inference pipelines**.  
+- Managing the **computational demands** of model training and serving, while addressing both latency and high availability (common software engineering concerns) as well as model performance (an ML-specific consideration).  
+
+In the context of ML, system design involves making key decisions that shape the entire ML workflow:
+- How do we architect a system to handle **real-time predictions** at scale?  
+- How can we design **feature pipelines** to ensure **reproducibility** and **consistency** across environments?  
+- What infrastructure is required to support **distributed training**?  
+
+While we will explore *ML-specific system design questions* in later chapters, it is crucial to first understand the **foundations of system design**. Topics such as **networking**, **caching**, **load balancing**, and **messaging** form the backbone of all software systems, including those for ML applications.
